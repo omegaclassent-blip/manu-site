@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Manuscript Collective — Notes Worth Reading</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&family=Cormorant:ital,wght@1,300&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --ink-soft: #1c1a17;
+    --ink-mid: #2e2b26;
+    --parchment: #f5f0e8;
+    --parchment-dim: #e8e1d3;
+    --cream: #faf7f2;
+    --amber: #c8922a;
+    --amber-light: #e8b04a;
+    --amber-dim: #9a6e1e;
+    --warm-gray: #7a7268;
+    --divider: rgba(200, 146, 42, 0.25);
+    --text-body: #d4cfc6;
+    --text-muted: #7a7268;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ============ GRAIN OVERLAY ============ */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.5;
+  }
+
+  /* ============ TYPOGRAPHY ============ */
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  .display {
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+
+  .display em {
+    font-style: italic;
+    color: var(--amber);
+    font-weight: 300;
+  }
+
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    color: var(--parchment);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  p { color: var(--text-body); }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ============ LAYOUT ============ */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .container--narrow {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  section { padding: 7rem 0; }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(15,14,12,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(0px);
+    transition: background 0.3s;
+  }
+
+  nav.scrolled {
+    background: rgba(15,14,12,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--parchment);
+  }
+
+  .nav-logo span { color: var(--amber); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--parchment); }
+
+  .nav-cta {
+    padding: 0.55rem 1.4rem;
+    border: 1px solid var(--amber);
+    color: var(--amber) !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.15em !important;
+    transition: background 0.2s, color 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--amber) !important;
+    color: var(--ink) !important;
+  }
+
+  /* ============ HERO ============ */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 7rem;
+    padding-top: 10rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(12rem, 22vw, 22rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(200, 146, 42, 0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
+  .hero-rule {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--amber));
+    margin-bottom: 2.5rem;
+    margin-left: 2rem;
+    opacity: 0;
+    animation: fadeDown 1s 0.3s forwards;
+  }
+
+  .hero-content {
+    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 2rem;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 540px;
+    margin-top: 2.5rem;
+    line-height: 1.6;
+  }
+
+  .hero-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 4rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .hero-formats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .format-tag {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid rgba(122, 114, 104, 0.3);
+    padding: 0.35rem 0.8rem;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--amber);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background: var(--amber-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 1px solid rgba(200, 146, 42, 0.35);
+    color: var(--amber);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--amber);
+    background: rgba(200, 146, 42, 0.07);
+  }
+
+  /* ============ MARQUEE ============ */
+  .marquee-section {
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    padding: 1.25rem 0;
+    overflow: hidden;
+    background: var(--ink-soft);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .marquee-item::after {
+    content: '◆';
+    font-size: 0.4rem;
+    color: var(--amber);
+  }
+
+  /* ============ MANIFESTO ============ */
+  #manifesto {
+    background: var(--ink-soft);
+    position: relative;
+  }
+
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .manifesto-left {
+    position: sticky;
+    top: 8rem;
+  }
+
+  .manifesto-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    font-weight: 300;
+    color: rgba(200, 146, 42, 0.12);
+    line-height: 1;
+    margin-bottom: -1rem;
+  }
+
+  .manifesto-right p {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--text-body);
+    margin-bottom: 1.5rem;
+  }
+
+  .manifesto-right p strong {
+    color: var(--parchment);
+    font-weight: 400;
+  }
+
+  .manifesto-quote {
+    border-left: 2px solid var(--amber);
+    padding-left: 2rem;
+    margin: 3rem 0;
+  }
+
+  .manifesto-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem !important;
+    line-height: 1.5 !important;
+    color: var(--parchment) !important;
+    margin: 0 !important;
+  }
+
+  /* ============ PROBLEM ============ */
+  #problem {
+    position: relative;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--divider);
+    margin-top: 4rem;
+    border: 1px solid var(--divider);
+  }
+
+  .problem-card {
+    background: var(--ink);
+    padding: 3rem 2.5rem;
+    position: relative;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.3s;
+  }
+
+  .problem-card:hover::before {
+    background: var(--amber);
+  }
+
+  .problem-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(200, 146, 42, 0.15);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .problem-card h3 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--parchment);
+    margin-bottom: 1rem;
+  }
+
+  .problem-card p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .problem-strike {
+    display: inline-block;
+    position: relative;
+    color: var(--amber);
+  }
+
+  .problem-strike::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.6;
+  }
+
+  /* ============ ABOUT ============ */
+  #about {
+    background: var(--ink-soft);
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 7rem;
+    align-items: center;
+  }
+
+  .about-text h2 {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    color: var(--parchment);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+
+  .about-text h2 em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--divider);
+  }
+
+  .pillar {
+    padding: 2rem;
+    border-bottom: 1px solid var(--divider);
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    transition: background 0.2s;
+  }
+
+  .pillar:last-child { border-bottom: none; }
+
+  .pillar:hover { background: rgba(200, 146, 42, 0.04); }
+
+  .pillar-icon {
+    font-size: 1.25rem;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  .pillar h4 {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+  }
+
+  .pillar p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  /* ============ SERVICES ============ */
+  #services {
+    position: relative;
+  }
+
+  .services-intro {
+    max-width: 640px;
+    margin-bottom: 5rem;
+  }
+
+  .services-intro p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-top: 1rem;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+    margin-bottom: 4rem;
+  }
+
+  .price-card {
+    background: var(--ink);
+    padding: 3.5rem 3rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .price-card:hover {
+    background: var(--ink-soft);
+  }
+
+  .price-card.featured {
+    background: var(--ink-soft);
+    grid-column: span 2;
+  }
+
+  .price-card.featured .card-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .price-tier {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .price-tier::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--divider);
+    max-width: 60px;
+  }
+
+  .price-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--parchment);
+    margin-bottom: 0.5rem;
+  }
+
+  .price-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .price-includes {
+    list-style: none;
+    margin-bottom: 2.5rem;
+  }
+
+  .price-includes li {
+    font-size: 0.88rem;
+    color: var(--text-body);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(200, 146, 42, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .price-includes li::before {
+    content: '—';
+    color: var(--amber);
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .price-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .price-from {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .price-amount sup {
+    font-size: 1.2rem;
+    vertical-align: super;
+  }
+
+  .price-note {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.35rem;
+  }
+
+  .price-cta {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border: 1px solid rgba(200, 146, 42, 0.4);
+    color: var(--amber);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .price-cta:hover {
+    background: rgba(200, 146, 42, 0.1);
+    border-color: var(--amber);
+  }
+
+  .featured .price-cta {
+    background: var(--amber);
+    color: var(--ink);
+    border-color: var(--amber);
+  }
+
+  .featured .price-cta:hover {
+    background: var(--amber-light);
+  }
+
+  .addons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+  }
+
+  .addon {
+    background: var(--ink);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .addon-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .addon-name {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--text-body);
+  }
+
+  /* ============ HOW IT WORKS ============ */
+  #process {
+    background: var(--ink-soft);
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4rem;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--divider);
+    z-index: 0;
+  }
+
+  .step {
+    padding: 0 2rem 0 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-dot {
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid var(--amber);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    background: var(--ink-soft);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--amber);
+    font-weight: 300;
+  }
+
+  .step h3 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--parchment);
+    margin-bottom: 0.75rem;
+  }
+
+  .step p {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+
+  /* ============ TESTIMONIALS ============ */
+  #testimonials {
+    position: relative;
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+    margin-top: 4rem;
+  }
+
+  .testimonial {
+    background: var(--ink);
+    padding: 3rem 2.5rem;
+    transition: background 0.3s;
+  }
+
+  .testimonial:hover { background: var(--ink-soft); }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--parchment);
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .testimonial-text::before {
+    content: '"';
+    font-size: 5rem;
+    color: rgba(200, 146, 42, 0.12);
+    position: absolute;
+    top: -1.5rem;
+    left: -0.75rem;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .testimonial-author {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .testimonial-author strong {
+    display: block;
+    color: var(--parchment);
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    font-size: 0.82rem;
+  }
+
+  /* ============ TRIAGE CTA ============ */
+  #triage {
+    background: var(--ink-soft);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .triage-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, rgba(200, 146, 42, 0.06) 0%, transparent 70%);
+  }
+
+  .triage-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .triage-text h2 {
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    color: var(--parchment);
+    margin-bottom: 1.5rem;
+    line-height: 1.15;
+  }
+
+  .triage-text h2 em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  .triage-text p {
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 2rem;
+  }
+
+  .triage-form {
+    background: var(--ink);
+    border: 1px solid var(--divider);
+    padding: 3rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.6rem;
+  }
+
+  .form-input {
+    width: 100%;
+    background: var(--ink-mid);
+    border: 1px solid rgba(200, 146, 42, 0.2);
+    color: var(--parchment);
+    padding: 0.9rem 1.25rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .form-input:focus { border-color: var(--amber); }
+
+  .form-input::placeholder { color: var(--text-muted); }
+
+  select.form-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8922a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    cursor: pointer;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 1rem;
+    background: var(--amber);
+    color: var(--ink);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .form-submit:hover { background: var(--amber-light); }
+
+  .form-disclaimer {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+
+  /* ============ PROMISE ============ */
+  #promise {
+    padding: 6rem 0;
+    border-top: 1px solid var(--divider);
+  }
+
+  .promise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    margin-top: 3rem;
+  }
+
+  .promise-item h3 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--parchment);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .promise-item p {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--ink-soft);
+    border-top: 1px solid var(--divider);
+    padding: 4rem 0 2.5rem;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-brand h3 span { color: var(--amber); }
+
+  .footer-brand p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    max-width: 320px;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-col h4 {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col li {
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .footer-col li:hover { color: var(--parchment); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--divider);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .footer-pledge {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--amber);
+  }
+
+  /* ============ DIVIDER ============ */
+  .hr-amber {
+    border: none;
+    height: 1px;
+    background: var(--divider);
+    margin: 0;
+  }
+
+  /* ============ SCROLL ANIMATIONS ============ */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ============ KEYFRAMES ============ */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 900px) {
+    .manifesto-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .manifesto-left { position: static; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .about-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .price-card.featured { grid-column: span 1; }
+    .price-card.featured .card-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .addons { grid-template-columns: repeat(2, 1fr); }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .triage-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .promise-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .nav-links { display: none; }
+    .process-steps::before { display: none; }
+    .hero-bg-text { font-size: 8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">The Manuscript<span>.</span>Collective</a>
+  <ul class="nav-links">
+    <li><a href="#manifesto">Our Philosophy</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">How It Works</a></li>
+    <li><a href="#triage" class="nav-cta">Free Triage Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-text">Draft</div>
+  <div class="hero-rule"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Script · Novel · Television · Comics — Professional Consultation</p>
+    <h1 class="display">
+      Your work<br>
+      deserves a<br>
+      <em>real reader.</em>
+    </h1>
+    <p class="hero-subtitle">Manuscript consultation by working writers, for writers. No algorithms. No gatekeeping. Just honest, peer-level notes that help you grow.</p>
+    <div class="hero-bottom">
+      <div class="hero-formats">
+        <span class="format-tag">Feature Film</span>
+        <span class="format-tag">TV Pilot</span>
+        <span class="format-tag">Novel</span>
+        <span class="format-tag">Short Film</span>
+        <span class="format-tag">Comic Script</span>
+        <span class="format-tag">Graphic Novel</span>
+      </div>
+      <div class="hero-cta-group">
+        <a href="#triage" class="btn-primary">Book a Free Triage Call</a>
+        <a href="#services" class="btn-ghost">See Services & Pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Written by working professionals</span>
+    <span class="marquee-item">Every note is human</span>
+    <span class="marquee-item">Zero AI-generated feedback</span>
+    <span class="marquee-item">All formats, all career stages</span>
+    <span class="marquee-item">Non-predatory. Always.</span>
+    <span class="marquee-item">Peer-level conversation</span>
+    <span class="marquee-item">Craft first</span>
+    <span class="marquee-item">Written by working professionals</span>
+    <span class="marquee-item">Every note is human</span>
+    <span class="marquee-item">Zero AI-generated feedback</span>
+    <span class="marquee-item">All formats, all career stages</span>
+    <span class="marquee-item">Non-predatory. Always.</span>
+    <span class="marquee-item">Peer-level conversation</span>
+    <span class="marquee-item">Craft first</span>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section id="manifesto">
+  <div class="container">
+    <div class="manifesto-grid">
+      <div class="manifesto-left fade-up">
+        <p class="section-label">Why We Exist</p>
+        <div class="manifesto-number">01</div>
+        <h2 class="section-heading">A different<br><em>kind of</em><br>table.</h2>
+      </div>
+      <div class="manifesto-right fade-up">
+        <p>
+          The manuscript consultation industry is broken. Coverage farms charging $300 for notes generated by an algorithm. Contest readers who've never sold a script ranking your work with a number that means nothing. Development "coaches" trading on prestige to charge $500 an hour for a conversation you could have with any working writer who actually gives a damn.
+        </p>
+        <p>
+          <strong>We built The Manuscript Collective because we couldn't find what we needed ourselves.</strong> As working writers — in TV, features, publishing, and comics — we know what it actually feels like to have your work stress-tested by someone who respects both the craft and you.
+        </p>
+        <div class="manifesto-quote">
+          <p>"You don't need a grade. You need a conversation with someone who's been in the room."</p>
+        </div>
+        <p>
+          Every person who reads your work at The Manuscript Collective is a credentialed professional writer. They'll give you their actual opinion, delivered with the care of a colleague who wants to see you succeed — not a gatekeeper who wants to evaluate you.
+        </p>
+        <p>
+          Whether you're finishing your first pilot or rewriting your fifth feature, you deserve notes that help you get better — not just notes that make you feel processed.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-amber">
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-label">The Landscape</p>
+      <h2 class="section-heading">What's out there.<br><em>What's missing.</em></h2>
+    </div>
+    <div class="problem-grid fade-up">
+      <div class="problem-card">
+        <div class="problem-number">I</div>
+        <h3>The <span class="problem-strike">Coverage Farm</span></h3>
+        <p>$200–$400 for notes that may be AI-generated, written by a poorly-paid reader with no credits, returned in 48 hours with a score. You're not a project to be processed.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-number">II</div>
+        <h3>The <span class="problem-strike">Contest Machine</span></h3>
+        <p>Your money goes in. A ranking comes out. No conversation. No development path. No relationship. The feedback is an afterthought to the competition.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-number">III</div>
+        <h3>The <span class="problem-strike">Prestige Guru</span></h3>
+        <p>$500/hour feels impressive until you realize you're paying for a credential, not a craft conversation. The access is real; the value isn't always proportional.</p>
+      </div>
+    </div>
+    <div style="margin-top:3rem; max-width: 680px;" class="fade-up">
+      <p style="font-size: 1.1rem; color: var(--parchment); line-height: 1.8;">What doesn't exist — yet — is a trusted, affordable, relationship-first space where professional writers give other writers <em style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--amber-light);">honest notes, real conversations, and genuine investment in their growth.</em></p>
+      <p style="margin-top:1rem;">That's what we're building here.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-amber">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-text fade-up">
+        <p class="section-label">Who We Are</p>
+        <h2>Writers helping writers<br>do their <em>best work.</em></h2>
+        <p>
+          We are not a service. We are a collective of working professional writers who believe in the power of honest, peer-level creative dialogue. Every consultant you work with has a track record — produced scripts, published novels, optioned work, credits. Not credentials from a workshop. Actual work in the world.
+        </p>
+        <p>
+          We specialize in the formats that matter to you: television drama and comedy, features of every genre, literary and commercial fiction, and the full spectrum of comics and graphic narrative.
+        </p>
+        <p>
+          More importantly, we specialize in the conversation. We'll tell you what's working. We'll tell you what isn't. We'll do it with honesty, warmth, and zero agenda beyond helping you grow.
+        </p>
+        <div style="margin-top:2.5rem;">
+          <a href="#triage" class="btn-primary">Start the Conversation</a>
+        </div>
+      </div>
+      <div class="about-pillars fade-up">
+        <div class="pillar">
+          <div class="pillar-icon">✦</div>
+          <div>
+            <h4>Always Human</h4>
+            <p>Every note you receive is written by a real person with real professional experience. We will never use AI to generate feedback. Ever.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">✦</div>
+          <div>
+            <h4>Named & Accountable</h4>
+            <p>You'll always know who read your work. No anonymous readers. No mystery consultants. You deserve to know whose perspective you're getting.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">✦</div>
+          <div>
+            <h4>Growth-First</h4>
+            <p>We don't evaluate you. We develop alongside you. Our goal is your next draft, not a score on this one.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">✦</div>
+          <div>
+            <h4>No Gatekeeping</h4>
+            <p>This isn't a contest. We're not deciding if you're good enough. We're here to help you be better — whatever that looks like for you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-amber">
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-intro fade-up">
+      <p class="section-label">Services & Pricing</p>
+      <h2 class="section-heading">Clear pricing.<br><em>Real value.</em><br>No surprises.</h2>
+      <p>Four service tiers, designed for every stage of the writing process. From a single focused read to an ongoing creative partnership. All delivered by a named consultant. All backed by our transparency guarantee.</p>
+    </div>
+
+    <div class="pricing-grid fade-up">
+
+      <!-- TIER 1 -->
+      <div class="price-card">
+        <p class="price-tier">Tier One</p>
+        <h3 class="price-name">The Read</h3>
+        <p class="price-tagline">Coverage + written development notes</p>
+        <ul class="price-includes">
+          <li>2–4 page written notes on structure, character, dialogue & voice</li>
+          <li>Marketability & format analysis</li>
+          <li>One clear, actionable rewrite priority</li>
+          <li>Delivered in 7–10 business days</li>
+          <li>Named consultant always assigned</li>
+        </ul>
+        <div class="price-bottom">
+          <div>
+            <p class="price-from">Starting from</p>
+            <p class="price-amount"><sup>$</sup>135</p>
+            <p class="price-note">Feature $185 · TV Pilot $155 · Novel excerpt $175</p>
+          </div>
+          <a href="#triage" class="price-cta">Get Started</a>
+        </div>
+      </div>
+
+      <!-- TIER 2 -->
+      <div class="price-card">
+        <p class="price-tier">Tier Two</p>
+        <h3 class="price-name">The Conversation</h3>
+        <p class="price-tagline">Coverage + 45-min video consultation</p>
+        <ul class="price-includes">
+          <li>Full written notes (as above)</li>
+          <li>45-minute recorded Zoom session</li>
+          <li>Post-call summary & action email</li>
+          <li>Space to ask every question you have</li>
+          <li>Delivered in 10–14 business days</li>
+        </ul>
+        <div class="price-bottom">
+          <div>
+            <p class="price-from">Starting from</p>
+            <p class="price-amount"><sup>$</sup>265</p>
+            <p class="price-note">Feature $345 · TV Pilot $295 · Novel excerpt $325</p>
+          </div>
+          <a href="#triage" class="price-cta">Get Started</a>
+        </div>
+      </div>
+
+      <!-- TIER 3 — FEATURED -->
+      <div class="price-card featured">
+        <div class="card-inner">
+          <div>
+            <p class="price-tier">Tier Three</p>
+            <h3 class="price-name">The Room</h3>
+            <p class="price-tagline">Ongoing monthly development partnership</p>
+            <ul class="price-includes">
+              <li>One full manuscript read per month</li>
+              <li>Two 45-minute consultation calls</li>
+              <li>Unlimited email Q&A between sessions</li>
+              <li>Career strategy & pitch preparation</li>
+              <li>Query letter & logline review included</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.8; margin-bottom:2rem;">Designed for writers actively in a rewrite cycle, preparing to query, developing a pilot to pitch, or working toward a major submission. The most personal and sustainable way to work with us.</p>
+            <div class="price-bottom">
+              <div>
+                <p class="price-from">Monthly investment</p>
+                <p class="price-amount"><sup>$</sup>750</p>
+                <p class="price-note">3-month minimum · Cancel anytime after</p>
+              </div>
+              <a href="#triage" class="price-cta">Apply for a Spot</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 4 -->
+      <div class="price-card" style="grid-column:span 2;">
+        <p class="price-tier">Tier Four</p>
+        <h3 class="price-name">The Full Table</h3>
+        <p class="price-tagline">Comprehensive development — for your most important submission</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; margin-top:1.5rem;">
+          <ul class="price-includes">
+            <li>Full manuscript read, any format, any length</li>
+            <li>Two consultation calls (pre- and post-rewrite)</li>
+            <li>Written development plan & story map</li>
+            <li>One complete rewrite read included</li>
+            <li>Pitch deck or query letter review</li>
+          </ul>
+          <div>
+            <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.8; margin-bottom:2rem;">This is for the project that matters most. A funding application. A pitch to your dream showrunner. A query to your top five agents. One dedicated engagement with everything we have to give.</p>
+            <div class="price-bottom">
+              <div>
+                <p class="price-from">One-time investment</p>
+                <p class="price-amount"><sup>$</sup>1,200</p>
+                <p class="price-note">Non-recurring · Spots limited to 4/month</p>
+              </div>
+              <a href="#triage" class="price-cta">Inquire Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fade-up">
+      <p class="section-label" style="margin-bottom:2rem;">À La Carte Add-ons</p>
+      <div class="addons">
+        <div class="addon">
+          <span class="addon-price">$65</span>
+          <span class="addon-name">Query Letter Review</span>
+        </div>
+        <div class="addon">
+          <span class="addon-price">$85</span>
+          <span class="addon-name">Pitch Deck Review (TV)</span>
+        </div>
+        <div class="addon">
+          <span class="addon-price">+$75</span>
+          <span class="addon-name">48–72hr Rush Delivery</span>
+        </div>
+        <div class="addon">
+          <span class="addon-price">50%</span>
+          <span class="addon-name">Second-Pass Rewrite Read</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-amber">
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-label">How It Works</p>
+      <h2 class="section-heading">Simple. Personal.<br><em>No hoops.</em></h2>
+    </div>
+    <div class="process-steps fade-up">
+      <div class="step">
+        <div class="step-dot">1</div>
+        <h3>Book Your Free Triage Call</h3>
+        <p>15 minutes, no pitch. We learn where your project is and what it needs. You leave with a clear recommendation — even if it's not one of our services.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">2</div>
+        <h3>We Match You to the Right Consultant</h3>
+        <p>Based on your format, genre, and goals, we match you with the consultant whose experience is most relevant to your specific project.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">3</div>
+        <h3>Submit & We Get to Work</h3>
+        <p>Send us your draft. Your named consultant reads it with genuine attention and time — not in 45 minutes, not with an algorithm.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot">4</div>
+        <h3>Notes, Conversation, Growth</h3>
+        <p>Receive your written notes and, if applicable, schedule your call. Leave the engagement with a clear path forward and the confidence to take it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-amber">
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="fade-up">
+      <p class="section-label">What Writers Say</p>
+      <h2 class="section-heading">The proof is in<br><em>the next draft.</em></h2>
+    </div>
+    <div class="testimonial-grid fade-up">
+      <div class="testimonial">
+        <p class="testimonial-text">I've paid for coverage three times before this. Every other time I got a document. With the Collective, I got a real conversation — someone who'd actually wrestled with the same structural problem I was in, and knew how to help me find my way out.</p>
+        <div class="testimonial-author">
+          <strong>D.R., TV Drama Writer</strong>
+          Quarterfinalist, Austin Film Festival — Feature Screenplay
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">What stopped me from seeking notes before was the fear that someone would just validate what wasn't working. What I got instead was honesty wrapped in genuine care. My novel is 40% better because of one session.</p>
+        <div class="testimonial-author">
+          <strong>M.K., Novelist</strong>
+          Literary Fiction, agented after rewrite
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">I'm a produced TV writer who was transitioning to comics and felt completely lost. The consultant had read my whole script, understood the format deeply, and gave me a 45-minute conversation I couldn't have gotten anywhere else for any price.</p>
+        <div class="testimonial-author">
+          <strong>T.W., Television Writer</strong>
+          Staff writer transitioning to graphic novels
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-amber">
+
+<!-- TRIAGE CTA -->
+<section id="triage">
+  <div class="triage-bg"></div>
+  <div class="container">
+    <div class="triage-inner">
+      <div class="triage-text fade-up">
+        <p class="section-label">Start Here</p>
+        <h2>Let's figure out<br>what your work<br><em>actually needs.</em></h2>
+        <p>
+          Book a free 15-minute Manuscript Triage call. No sales pitch. No commitment. We'll read your logline or synopsis, hear where you are in the process, and tell you honestly whether we can help — and how.
+        </p>
+        <p>
+          Most writers leave the triage call with something useful, regardless of what they decide next.
+        </p>
+        <div style="margin-top:0.5rem; display:flex; gap:2rem; flex-wrap:wrap;">
+          <div>
+            <p style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--amber); line-height:1;">Free</p>
+            <p style="font-size:0.72rem; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase;">Triage Call</p>
+          </div>
+          <div>
+            <p style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--amber); line-height:1;">15 min</p>
+            <p style="font-size:0.72rem; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase;">No commitment</p>
+          </div>
+          <div>
+            <p style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--amber); line-height:1;">Real</p>
+            <p style="font-size:0.72rem; color:var(--text-muted); letter-spacing:0.1em; text-transform:uppercase;">Every time</p>
+          </div>
+        </div>
+      </div>
+      <div class="triage-form fade-up">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="First and last name">
+
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+
+        <label class="form-label">What Are You Working On?</label>
+        <select class="form-input">
+          <option value="" disabled selected>Select a format</option>
+          <option>Feature Screenplay</option>
+          <option>TV Pilot (Drama)</option>
+          <option>TV Pilot (Comedy/Half-hour)</option>
+          <option>Novel / Literary Fiction</option>
+          <option>Commercial Fiction</option>
+          <option>Comic Book Script</option>
+          <option>Graphic Novel</option>
+          <option>Short Film</option>
+          <option>Not sure yet</option>
+        </select>
+
+        <label class="form-label">Where Are You in the Process?</label>
+        <select class="form-input">
+          <option value="" disabled selected>Select a stage</option>
+          <option>First draft, not sure what's working</option>
+          <option>Second or third draft, specific questions</option>
+          <option>Polishing before submission / querying</option>
+          <option>Stuck in development, need an outside eye</option>
+          <option>Career transition (changing formats)</option>
+        </select>
+
+        <button class="form-submit">Book My Free Triage Call →</button>
+        <p class="form-disclaimer">We'll respond within 24 hours to schedule your call. No spam. No pressure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-amber">
+
+<!-- PROMISE -->
+<section id="promise">
+  <div class="container">
+    <div class="fade-up" style="margin-bottom:1rem;">
+      <p class="section-label">Our Commitment</p>
+      <h2 class="section-heading">What we will<br><em>always give you.</em></h2>
+    </div>
+    <div class="promise-grid fade-up">
+      <div class="promise-item">
+        <h3>Total Transparency</h3>
+        <p>We never hide who read your work or what their credentials are. We tell you our process, our pricing, and our honest assessment — even when that means telling you we're not the right fit.</p>
+      </div>
+      <div class="promise-item">
+        <h3>Zero AI Notes. Period.</h3>
+        <p>We will never use generative AI to produce your manuscript feedback. Not as a draft. Not as a first pass. If the words in your notes weren't thought by a human who read your work, they will never reach you.</p>
+      </div>
+      <div class="promise-item">
+        <h3>Your Growth Over Our Revenue</h3>
+        <p>If we don't think our service is what your project needs right now, we'll tell you. We'd rather send you somewhere more useful than take your money for the wrong thing.</p>
+      </div>
+      <div class="promise-item">
+        <h3>Honest Notes, Delivered with Care</h3>
+        <p>Honesty and kindness aren't opposites. You'll get the truth about your work, delivered by someone who respects the courage it takes to share it.</p>
+      </div>
+      <div class="promise-item">
+        <h3>Consistency You Can Trust</h3>
+        <p>Every consultant meets the same standard. Every engagement comes with the same commitment. What you see here is what you get.</p>
+      </div>
+      <div class="promise-item">
+        <h3>No Gatekeeping, Ever</h3>
+        <p>This is not a contest. We don't decide who's worthy of development. Every writer who comes to us deserves a real conversation, regardless of where they are in their career.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>The Manuscript<span>.</span>Collective</h3>
+        <p>Professional manuscript consultation and writer development services across television, film, novel, and comics. By working writers, for writers.</p>
+        <p class="footer-pledge">Craft first. Always.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li>The Read</li>
+          <li>The Conversation</li>
+          <li>The Room</li>
+          <li>The Full Table</li>
+          <li>Add-On Services</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li>Free Triage Call</li>
+          <li>Meet the Consultants</li>
+          <li>The Draft Newsletter</li>
+          <li>Instagram</li>
+          <li>Twitter / X</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 The Manuscript Collective. All rights reserved.</p>
+      <p>Human notes. Always. — <a href="#" style="color:var(--amber);">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Scroll fade-up
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
