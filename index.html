@@ -141,14 +141,91 @@
   .addon-price { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--amber); display: block; margin-bottom: 0.35rem; }
   .addon-name { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.05em; color: var(--text-body); }
 
-  /* TESTIMONIALS */
-  .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--divider); border: 1px solid var(--divider); margin-top: 4rem; }
-  .testimonial { background: var(--ink); padding: 3rem 2.5rem; transition: background 0.3s; }
-  .testimonial:hover { background: var(--ink-soft); }
-  .testimonial-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; line-height: 1.7; color: var(--parchment); margin-bottom: 2rem; position: relative; }
-  .testimonial-text::before { content: '"'; font-size: 5rem; color: rgba(200, 146, 42, 0.12); position: absolute; top: -1.5rem; left: -0.75rem; font-family: 'Cormorant Garamond', serif; line-height: 1; pointer-events: none; }
-  .testimonial-author { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text-muted); }
-  .testimonial-author strong { display: block; color: var(--parchment); font-weight: 400; margin-bottom: 0.2rem; font-size: 0.82rem; }
+  /* TESTIMONIALS CAROUSEL */
+  .testimonial-carousel { margin-top: 4rem; }
+  .testimonial-outer { overflow: hidden; border: 1px solid var(--divider); }
+  .testimonial-track {
+    display: flex;
+    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  /* Each slide holds 2 testimonials side by side */
+  .testimonial-slide {
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--divider);
+  }
+  .testimonial {
+    background: var(--ink);
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--parchment);
+    margin-bottom: 2rem;
+    position: relative;
+    padding-top: 0.5rem;
+    flex: 1;
+  }
+  .testimonial-text::before {
+    content: '"';
+    font-size: 4.5rem;
+    color: rgba(200, 146, 42, 0.12);
+    position: absolute;
+    top: -1.25rem;
+    left: -0.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .testimonial-author {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    border-top: 1px solid var(--divider);
+    padding-top: 1.25rem;
+  }
+  .testimonial-author strong {
+    display: block;
+    color: var(--parchment);
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    font-size: 0.82rem;
+  }
+  /* Carousel controls */
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    margin-top: 1.25rem;
+  }
+  .carousel-dots { display: flex; gap: 0.6rem; align-items: center; }
+  .carousel-dot {
+    width: 6px; height: 6px;
+    background: rgba(200, 146, 42, 0.2);
+    border: none; padding: 0; cursor: pointer;
+    transition: background 0.2s, width 0.25s;
+  }
+  .carousel-dot.active { background: var(--amber); width: 22px; }
+  .carousel-arrows { display: flex; gap: 0.75rem; }
+  .carousel-arrow {
+    background: none;
+    border: 1px solid var(--divider);
+    color: var(--amber);
+    width: 2.5rem; height: 2.5rem;
+    cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .carousel-arrow:hover { border-color: var(--amber); background: rgba(200, 146, 42, 0.08); }
 
   /* TRIAGE */
   #triage { background: var(--ink-soft); position: relative; overflow: hidden; }
@@ -186,7 +263,6 @@
   /* ANIMATIONS */
   .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
-
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -200,7 +276,7 @@
     .price-card.featured .card-inner { grid-template-columns: 1fr; gap: 2rem; }
     .addons { grid-template-columns: repeat(2, 1fr); }
     .process-steps { grid-template-columns: 1fr 1fr; }
-    .testimonial-grid { grid-template-columns: 1fr; }
+    .testimonial-slide { grid-template-columns: 1fr; }
     .triage-inner { grid-template-columns: 1fr; gap: 3rem; }
     .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     .nav-links { display: none; }
@@ -458,24 +534,60 @@
       <p class="section-label">What Writers Say</p>
       <h2 class="section-heading">The proof is in<br><em>the next draft.</em></h2>
     </div>
-    <div class="testimonial-grid fade-up">
-      <div class="testimonial">
-        <p class="testimonial-text">I've paid for coverage three times before this. Every other time I got a document. With the First Draft, I got a video call. It seems small at the time, but that gesture changed how I felt and approached my own work going forward.</p>
-        <div class="testimonial-author"><strong>Arlette R., TV Drama Writer</strong>Quarterfinalist, Austin Film Festival 2021 — Feature Screenplay</div>
+
+    <div class="testimonial-carousel fade-up">
+      <div class="testimonial-outer">
+        <div class="testimonial-track" id="testimonialTrack">
+
+          <!-- SLIDE 1 -->
+          <div class="testimonial-slide">
+            <div class="testimonial">
+              <p class="testimonial-text">Mikhail's notes were absolutely incredible — by far the best I've ever received. He provided a comprehensive list of ideas for improving my 30-minute TV pilot and also recommended extending it to one hour. After revising with Mikhail's wonderful ideas, my one-hour pilot received two fantastic reviews on The Blacklist and earned a spot on the site's Top List. I can't thank him enough. I highly recommend First Draft Co. to new and seasoned writers alike.</p>
+              <div class="testimonial-author">
+                <strong>Meghan M., Produced Playwright & Screenwriter</strong>
+                Nicholl Fellowship Quarterfinalist · Blacklist Top List
+              </div>
+            </div>
+            <div class="testimonial">
+              <p class="testimonial-text">I've paid for coverage three times before this. Every other time I got a document. With First Draft Co., I got a video call. It seems small at the time, but that gesture changed how I felt and approached my own work going forward.</p>
+              <div class="testimonial-author">
+                <strong>Arlette R., TV Drama Writer</strong>
+                Quarterfinalist, Austin Film Festival 2021 — Feature Screenplay
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2 -->
+          <div class="testimonial-slide">
+            <div class="testimonial">
+              <p class="testimonial-text">What stopped me from seeking notes before was the fear that someone would just validate what wasn't working. With you all I got honesty wrapped in genuine knowledge. My book is 40% better because of one session.</p>
+              <div class="testimonial-author">
+                <strong>Gavin D., Novelist</strong>
+                Literary Fiction 2025, agented after rewrite
+              </div>
+            </div>
+            <div class="testimonial">
+              <p class="testimonial-text">I've been in TV for 13 years and am taking the leap into comics. I felt completely lost. The consultant had read my whole script, understood the format deeply, and gave me a 45-minute conversation I couldn't have gotten anywhere else for any price.</p>
+              <div class="testimonial-author">
+                <strong>Tiffany W., Television Writer</strong>
+                Staff writer transitioning to graphic novels
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-      <div class="testimonial">
-        <p class="testimonial-text">What stopped me from seeking notes before was the fear that someone would just validate what wasn't working. With you all I got honesty wrapped in genuine knowledge. My book is 40% better because of one session.</p>
-        <div class="testimonial-author"><strong>Gavin D., Novelist</strong>Literary Fiction 2025, agented after rewrite</div>
-      </div>
-      <div class="testimonial">
-        <p class="testimonial-text">I've been in TV for 13 years and am taking the leap into comics. I felt completely lost. The consultant had read my whole script, understood the format deeply, and gave me a 45-minute conversation I couldn't have gotten anywhere else for any price.</p>
-        <div class="testimonial-author"><strong>Tiffany W., Television Writer</strong>Staff writer transitioning to graphic novels</div>
-      </div>      
-      <div class="testimonial">
-        <p class="testimonial-text">Mikhail’s notes were absolutely incredible– by far the best I've ever received! He provided a comprehensive list of ideas for improving my 30 min TV pilot and also recommended extending it to one hour. After revising with Mikhail’s wonderful ideas, my one hour TV pilot received two fantastic reviews on The Blacklist and earned a spot on the site's Top List. I can't thank Mikhail enough. I highly recommend his services to new and seasoned writers alike.</p>
-        <div class="testimonial-author"><strong>- Meghan M., Produced playwright and Screenwriter</strong>Nicholl Fellowship Quarterfinalist, Blacklist Top List</div>
+
+      <!-- Controls -->
+      <div class="carousel-controls">
+        <div class="carousel-dots" id="carouselDots"></div>
+        <div class="carousel-arrows">
+          <button class="carousel-arrow" id="prevBtn" aria-label="Previous">←</button>
+          <button class="carousel-arrow" id="nextBtn" aria-label="Next">→</button>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -508,10 +620,7 @@
         </div>
       </div>
 
-      <!-- ===== FORM — connected to Formspree ID: xeepkyen ===== -->
       <div class="triage-form fade-up">
-
-        <!-- Success state, hidden until submission -->
         <div id="form-success" style="display:none; text-align:center; padding:2rem 0;">
           <p style="font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:var(--amber); margin-bottom:1rem;">✦</p>
           <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.4rem; color:var(--parchment); margin-bottom:1rem;">You're on our radar.</p>
@@ -519,8 +628,6 @@
         </div>
 
         <form id="triage-form-el" action="https://formspree.io/f/xeepkyen" method="POST">
-
-          <!-- Honeypot: invisible to humans, blocks bots -->
           <input type="text" name="_gotcha" style="display:none">
 
           <label class="form-label" for="name">Your Name</label>
@@ -555,10 +662,8 @@
 
           <button type="submit" class="form-submit" id="form-btn">Book My Free Triage Call →</button>
           <p class="form-disclaimer">We'll respond within 24 hours to schedule your call. No spam. No pressure.</p>
-
         </form>
       </div>
-      <!-- ===== END FORM ===== -->
 
     </div>
   </div>
@@ -622,6 +727,39 @@
   }, { threshold: 0.12 });
   fadeEls.forEach(el => observer.observe(el));
 
+  // Testimonial carousel — 2 slides, 2 testimonials per slide
+  const track = document.getElementById('testimonialTrack');
+  const dotsWrap = document.getElementById('carouselDots');
+  const totalSlides = 2;
+  let current = 0;
+  let timer;
+
+  // Build dots
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => { goTo(i); resetTimer(); });
+    dotsWrap.appendChild(dot);
+  }
+
+  function goTo(index) {
+    current = (index + totalSlides) % totalSlides;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 10000);
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => { goTo(current - 1); resetTimer(); });
+  document.getElementById('nextBtn').addEventListener('click', () => { goTo(current + 1); resetTimer(); });
+
+  resetTimer();
+
   // Formspree async submit
   const triageForm = document.getElementById('triage-form-el');
   const formSuccess = document.getElementById('form-success');
@@ -631,14 +769,12 @@
     e.preventDefault();
     formBtn.textContent = 'Sending...';
     formBtn.disabled = true;
-
     try {
       const response = await fetch(triageForm.action, {
         method: 'POST',
         body: new FormData(triageForm),
         headers: { 'Accept': 'application/json' }
       });
-
       if (response.ok) {
         triageForm.style.display = 'none';
         formSuccess.style.display = 'block';
